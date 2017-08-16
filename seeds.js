@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Campground = require("./models/campground");
+var Comment = require("./models/comment");
 
 // sample data to work with
 var data = [
@@ -30,17 +31,30 @@ function seedDB(){
       console.log("Campgrounds removed");
       // add a few Campgrounds
       data.forEach(function(seed){
-        Campground.create(seed, function(err, data){
+        Campground.create(seed, function(err, campground){
           if (err) {
             console.log(err);
           } else {
             console.log("Added campground");
+              // add a few comments
+              Comment.create({
+                text: "Świetne miejsce, ale nie ma zasięgu!",
+                author: "Developer"
+              }, function(err, comment){
+                if (err) {
+                  console.log(err);
+                } else {
+                  campground.comments.push(comment);
+                  campground.save();
+                  console.log("New comment successfully added");
+                }
+              })
           }
         });
       })
     }
   });
-  // add a few comments
+
 }
 
 module.exports = seedDB;

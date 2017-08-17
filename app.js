@@ -1,10 +1,13 @@
 var express     = require("express"),
-app         = express(),
-bodyParser  = require("body-parser"),
-mongoose    = require("mongoose"),
-Campground  = require("./models/campground"),
-Comment     = require("./models/comment"),
-seedDB      = require("./seeds");
+app             = express(),
+bodyParser      = require("body-parser"),
+mongoose        = require("mongoose"),
+passport        = require("passport"),
+LocalStrategy   = require("passport-local"),
+Campground      = require("./models/campground"),
+User            = require("./models/user"),
+Comment         = require("./models/comment"),
+seedDB          = require("./seeds");
 
 
 // connecting to the database
@@ -20,6 +23,19 @@ app.get("/", function(req, res){
 });
 // executing seeds
 seedDB();
+
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+  secret: "My name is Patryk",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 // INDEX -show all campgrounds
 app.get("/campgrounds", function(req, res){

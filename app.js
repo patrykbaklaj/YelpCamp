@@ -45,8 +45,6 @@ app.get("/campgrounds", function(req, res){
       console.log("An error occurred");
       console.log(err);
     } else {
-      console.log("successfully added new item");
-      console.log(allCamps);
       res.render("campgrounds/index", {campgrounds: allCamps});
     }
   });
@@ -69,7 +67,6 @@ app.post("/campgrounds", function(req, res){
       console.log("An error occurred");
       console.log(err);
     } else {
-      console.log("successfully added new item to DB");
       // redirecting to campgrounds
       res.redirect("/campgrounds");
     }
@@ -126,6 +123,29 @@ app.post("/campgrounds/:id/comments", function(req, res){
         }
       })
     }
+  });
+});
+
+// =========================
+// AUTHENTICATION ROUTES
+// =========================
+
+// show register form
+app.get("/register", function(req, res){
+  res.render("register");
+});
+
+// handle sign up logic
+app.post("/register", function(req, res){
+  var newUser = new User({username: req.body.username});
+  User.register(newUser, req.body.password, function(err, user){
+    if (err) {
+      console.log(err);
+      return res.render("register");
+    }
+    passport.authenticate("local")(req, res, function(){
+      res.redirect("/campgrounds");
+    });
   });
 });
 

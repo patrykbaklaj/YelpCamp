@@ -149,6 +149,20 @@ app.post("/register", function(req, res){
   });
 });
 
+// shows login form
+app.get("/login", function(req, res){
+  res.render("login");
+});
+
+// handling login logic
+app.post("/login",
+passport.authenticate("local",
+{
+  successRedirect: "/campgrounds", failureRedirect: "/login"
+}), function(req, res){
+
+});
+
 app.listen(3000, function(){
   console.log("Server is listening on port 3000");
   console.log("YelpCamp v1");

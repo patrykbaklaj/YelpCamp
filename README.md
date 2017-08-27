@@ -2,4 +2,4 @@
 
 Sample app with Express
 
-## mongoDB, Express, passport
+## mongoDB, Express, Passport, Semantic UI

@@ -20,13 +20,7 @@ var commentRoutes    = require("./routes/comments"),
 
 
 // connecting to the database
-// local DB
-// mongoose.connect("mongodb://localhost/yelp_camp");
-
-// mLAB
-mongoose.connect("mongodb://patrykbaklaj:password@ds125774.mlab.com:25774/yelp_camp");
-
-// mongodb://patrykbaklaj:password@ds125774.mlab.com:25774/yelp_camp
+mongoose.connect(process.env.DATABASEURL);
 
 // app setup
 app.use(flash());
@@ -66,8 +60,11 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 // app.listen(3000, function(){
 //   console.log("Server is listening on port 3000");
+// console.log(process.env.DATABASEURL);
 //   console.log("YelpCamp v1");
 // });
+
 app.listen(process.env.PORT, process.env.IP, function(){
   console.log("Server started...");
+  console.log(process.env.DATABASEURL);
 });

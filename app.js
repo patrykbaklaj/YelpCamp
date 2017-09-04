@@ -19,7 +19,13 @@ var commentRoutes    = require("./routes/comments"),
 
 
 // connecting to the database
-mongoose.connect("mongodb://localhost/yelp_camp");
+// local DB
+// mongoose.connect("mongodb://localhost/yelp_camp");
+
+// mLAB
+mongoose.connect("mongodb://patrykbaklaj:password@ds125774.mlab.com:25774/yelp_camp");
+
+// mongodb://patrykbaklaj:password@ds125774.mlab.com:25774/yelp_camp
 
 // app setup
 app.use(flash());
